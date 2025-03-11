@@ -1,0 +1,256 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- bulma css template -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <!-- ionicons -->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <!-- model viewer -->
+  <!-- <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.1.1/model-viewer.min.js"></script> -->
+  <title>
+    SFDM
+  </title>
+</head>
+
+<body>
+  <section class="section">
+
+    <div class="container has-text-centered">
+      <style>
+        .inline-img {
+          vertical-align: middle; /* Aligns the image's center with the text’s center */
+        }
+      </style>
+      
+        <style>
+          p {
+            margin-bottom: 1em; /* Adds spacing after each paragraph */
+          }
+        </style>
+      <!-- paper title -->
+      <p class="title is-3"> SFDM: Robust Decomposition of Geometry and Reflectance for Realistic Face Rendering from Sparse-view Images
+      </p>
+      <!-- authors -->
+      <p class="title is-5 mt-2">
+        <a href="" target="_blank">Daisheng Jin</a><sup>1</sup>,
+        <a href="https://faculty.dlut.edu.cn/hujiangbei1/en/index.htm" target="_blank">Jiangbei Hu</a><sup>1,2</sup>,
+        <a href="" target="_blank">Baixin Xu</a><sup>1</sup>,
+        <a href="" target="_blank">Yuxin Dai</a><sup>1</sup>,
+        <a href="" target="_blank">Chen Qian</a><sup>3</sup>,
+        <a href="https://personal.ntu.edu.sg/yhe/" target="_blank">Ying He</a><sup>1&#9993</sup>
+      </p>
+      <!-- affiliations -->
+      <p class="subtitle is-5">
+        <sup>1</sup> S-Lab, Nanyang Technological University &nbsp;
+        <sup>2</sup> Dalian University of Tehcnology &nbsp;
+        <sup>3</sup> SenseTime Research &nbsp;
+        <br>
+        <sup>&#9993</sup> Corresponding author
+      </p>
+
+      <!-- publication -->
+      <p class="subtitle is-3">
+        CVPR 2025
+      </p>
+
+      <!-- other links -->
+      <div class="is-flex is-justify-content-center">
+        <span class="icon-text mx-1">
+          <a class="button is-dark" href="https://arxiv.org/abs/2312.06085" role="button" target="_blank"> <span
+              class="icon"> <ion-icon name="document-outline"></ion-icon> </span> <span> Arxiv </span> </a>
+        </span>
+        <span class="icon-text mx-1">
+          <a class="button is-dark" href="" role="button" target="_blank">
+            <span class="icon"> <ion-icon name="logo-github"></ion-icon> </span> <span> Code (coming soon) </span> </a>
+        </span>
+      </div>
+
+    </div>
+
+    <!-- main container -->
+    <div class="container is-max-desktop has-text-centered">
+
+      <p class="content has-text-centered is-size-5">
+      </p>
+      <video muted autoplay controls loop>
+        <source src="videos/poster_voiced_small.mp4" type="video/mp4">
+      </video>
+
+      <!-- abstract -->
+      <p class="title is-3 mt-5 has-text-centered"> Abstract </p>
+      <img src="imgs/teaser.png" alt="Pipeline" class="mt-3" style="width: 80%; height: auto;">
+
+      <p class="content is-size-5" , style="text-align: justify;">
+        In this study, we introduce a novel two-stage technique for decomposing and reconstructing facial features from sparse-view images,
+        a task made challenging by the unique geometry and complex skin reflectance of each individual. To synthesize 3D facial models more
+        realistically, we endeavor to decouple key facial attributes from the RGB color, including geometry, diffuse reflectance, 
+        and specular reflectance. Specifically, we design a Sparse-view Face Decomposition Model (<b>SFDM</b>): <b>1)</b> In the first stage, we 
+        create a general facial template from a wide array of individual faces, encapsulating essential geometric and reflectance 
+        characteristics. <b>2)</b> Guided by this template, we refine a specific facial model for each individual in the second stage, 
+        considering the interaction between geometry and reflectance, as well as the effects of subsurface scattering on the skin. With 
+        these advances, our method can reconstruct high-quality facial representations from as few as three images. The comprehensive 
+        evaluation and comparison reveal that our approach outperforms existing methods by effectively disentangling geometric and 
+        reflectance components, significantly enhancing the quality of synthesized novel views, and paving the way for applications 
+        in facial relighting and reflectance editing.
+      </p>
+
+
+      <p class="title is-3 mt-5 has-text-centered"> Sparse-view Face Decomposition Model </p>
+
+      <img src="imgs/new_pipe.png" alt="Network" class="mt-3">
+
+      <p class="content is-size-5" , style="text-align: justify;">
+        Our method learns a generalized facial template with distinct key attributes from multiple individuals, enabling photorealistic
+        novel-view synthesis as well as various other applications. The framework consists of two major branches: 
+        the upper branch focuses on geometry reconstruction, while the lower branch is for reflectance estimation.
+
+      </p>
+
+      <p class="content is-size-5" , style="text-align: justify;">
+        In Stage 1, we train a general facial template using multiple subjects, where all individuals are reconstructed through 
+        a shared template module that integrates both facial geometry and reflectance. For identity-dependent geometry, a deformation 
+        module maps corresponding points from the observation space to the template space. For identity-dependent reflectance, an 
+        offset module captures the deviation between a specific individual and the generalized facial template. By applying the learned 
+        deformation and reflectance offsets to the template, we obtain the final facial geometry and reflectance information for each individual. 
+        A physically based rendering module is then employed to simulate lighting conditions and the rendering process, reconstructing 
+        high-fidelity facial images. Throughout training, the template module progressively accumulates prior knowledge of human facial 
+        attributes, enhancing its generalization ability.
+      </p>
+
+      <p class="content is-size-5" , style="text-align: justify;">
+        In Stage 2, we initialize <b>SFDM</b> with the pretrained facial template to refine facial details of specific subjects. Building upon the template, 
+        we introduce a displacement module to reconstruct fine-scale details and out-of-domain geometric variations. For facial reflectance, 
+        an offset module is utilized to capture intricate reflectance properties unique to each individual. Furthermore, to enhance reconstruction fidelity, 
+        we propose two complementary strategies that leverage the inherent characteristics of our facial template. By integrating prior knowledge of 
+        both facial geometry and reflectance, we facilitate more accurate inference across both branches. Additionally, recognizing the limitations of BRDF 
+        in approximating skin reflectance, we introduce a subsurface scattering module to simulate light transport within the skin, achieving more realistic 
+        rendering results.
+      </p>
+
+      <img src="imgs/rendering_process.png" alt="rendering_process" class="mt-3" style="width: 80%; height: auto;">
+
+      <style>
+        .images {
+        display: flex;
+        gap: 0px;
+        margin-top: -15px;
+        margin-bottom: -30px;
+        }
+        img {
+            margin: 0;
+        }
+      </style>
+
+
+      <p class="title is-3 mt-5 has-text-centered"> Results </p>
+      <p class="content is-size-5" , style="text-align: justify;"> 
+        Here, we present some results of subjects from the publicly available list of 
+        <a href="https://facescape.nju.edu.cn/" target="_blank">Facescape</a>. 
+        Leveraging <b>SFDM</b>'s strong prior facial knowledge and high flexibility due to its deformability, 
+        we can reconstruct a diverse range of faces from sparse-view images.
+      </p>
+      <p class="title is-4 mt-5 has-text-left"> Different subjects </p>
+      
+
+      <div style="display: flex; flex-direction: column; align-items: center;">
+        <!-- images -->
+        <div class="images" style="display: flex; gap: 00px;">
+          <img src="gifs/122/render.gif" alt="122" class="mt-3" style="width: 200px; height: auto;">
+          <img src="gifs/122/normal.gif" alt="122" class="mt-3" style="width: 200px; height: auto;">
+          <img src="gifs/122/diffuse.gif" alt="122" class="mt-3" style="width: 200px; height: auto;">
+          <img src="gifs/122/spec.gif" alt="122" class="mt-3" style="width: 200px; height: auto;">
+        </div>
+
+        <div class="images" style="display: flex; gap: 00px;">
+          <img src="gifs/212/render.gif" alt="212" class="mt-3" style="width: 200px; height: auto;">
+          <img src="gifs/212/normal.gif" alt="212" class="mt-3" style="width: 200px; height: auto;">
+          <img src="gifs/212/diffuse.gif" alt="212" class="mt-3" style="width: 200px; height: auto;">
+          <img src="gifs/212/spec.gif" alt="212" class="mt-3" style="width: 200px; height: auto;">
+        </div>
+
+        <div class="images" style="display: flex; gap: 00px;">
+          <img src="gifs/340/render.gif" alt="340" class="mt-3" style="width: 200px; height: auto;">
+          <img src="gifs/340/normal.gif" alt="340" class="mt-3" style="width: 200px; height: auto;">
+          <img src="gifs/340/diffuse.gif" alt="340" class="mt-3" style="width: 200px; height: auto;">
+          <img src="gifs/340/spec.gif" alt="340" class="mt-3" style="width: 200px; height: auto;">
+        </div>
+        
+    
+        <!-- title -->
+        <div class="level" style="display: flex; gap: 0px;">
+            <p style="width: 200px; text-align: center; font-weight: bold;">Render</p>    
+            <p style="width: 200px; text-align: center; font-weight: bold;">Normal</p>
+            <p style="width: 200px; text-align: center; font-weight: bold;">Diffuse</p>
+            <p style="width: 200px; text-align: center; font-weight: bold;">Specular</p>
+        </div>
+      </div>
+
+      <p class="title is-4 mt-5 has-text-left"> Different expressions </p>
+
+      <div style="display: flex; flex-direction: column; align-items: center;">
+        <!-- images -->
+        <div class="images" style="display: flex; gap: 00px;">
+          <img src="gifs/344/344_render.gif" alt="exp16" class="mt-3" style="width: 200px; height: auto;">
+          <img src="gifs/344/344_normal.gif" alt="exp16" class="mt-3" style="width: 200px; height: auto;">
+          <img src="gifs/344/344_diffuse.gif" alt="exp16" class="mt-3" style="width: 200px; height: auto;">
+          <img src="gifs/344/344_spec.gif" alt="exp16" class="mt-3" style="width: 200px; height: auto;">
+        </div>
+
+        <div class="images" style="display: flex; gap: 0px;">
+          <img src="gifs/344/344_exp1_render.gif" alt="exp1" class="mt-3" style="width: 200px; height: auto;">
+          <img src="gifs/344/344_exp1_normal.gif" alt="exp1" class="mt-3" style="width: 200px; height: auto;">
+          <img src="gifs/344/344_exp1_diffuse.gif" alt="exp1" class="mt-3" style="width: 200px; height: auto;">
+          <img src="gifs/344/344_exp1_spec.gif" alt="exp1" class="mt-3" style="width: 200px; height: auto;">
+        </div>
+
+        <div class="images" style="display: flex; gap: 0px;">
+          <img src="gifs/344/344_exp4_render.gif" alt="exp4" class="mt-3" style="width: 200px; height: auto;">
+          <img src="gifs/344/344_exp4_normal.gif" alt="exp4" class="mt-3" style="width: 200px; height: auto;">
+          <img src="gifs/344/344_exp4_diffuse.gif" alt="exp4" class="mt-3" style="width: 200px; height: auto;">
+          <img src="gifs/344/344_exp4_spec.gif" alt="exp4" class="mt-3" style="width: 200px; height: auto;">
+        </div>
+        
+    
+        <!-- title -->
+        <div class="level" style="display: flex; gap: 0px;">
+            <p style="width: 200px; text-align: center; font-weight: bold;">Render</p>    
+            <p style="width: 200px; text-align: center; font-weight: bold;">Normal</p>
+            <p style="width: 200px; text-align: center; font-weight: bold;">Diffuse</p>
+            <p style="width: 200px; text-align: center; font-weight: bold;">Specular</p>
+        </div>
+      </div>
+
+      <!-- citation -->
+      <div class="card mt-4">
+        <header class="card-header">
+          <p class="card-header-title"> Citation </p>
+        </header>
+        <div class="card-content is-size-5 has-text-left">
+          <pre><code> @article{jin2023robust,
+            title={Robust Geometry and Reflectance Disentanglement for 3D Face Reconstruction from Sparse-view Images},
+            author={Jin, Daisheng and Hu, Jiangbei and Xu, Baixin and Dai, Yuxin and Qian, Chen and He, Ying},
+            journal={arXiv preprint arXiv:2312.06085},
+            year={2023}
+          }
+          </code></pre>
+        </div>
+      </div>
+
+      <p class="title is-3 mt-5 has-text-left"> Acknowledgement </p>
+      <p class="content is-size-5" , style="text-align: justify;"> 
+        This work was supported in part by the Ministry of Education, Singapore, under its Academic Research Fund Grants 
+        (MOE-T2EP20220-0005 & RT19/22) and the RIE2020 Industry Alignment Fund–Industry Collaboration Projects (IAF-ICP) 
+        Funding Initiative, as well as cash and in-kind contribution from the industry partner(s). 
+      </p>
+      
+    </div>
+
+
+  </section>
+</body>
+
+</html>
